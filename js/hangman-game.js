@@ -1,16 +1,23 @@
-var wordToGuess = 'developer';
-var guessesLeft = 6;
+var wordToGuess = '';
 var letters = [];
 var guessed = [];
+var guessesLeft = 0;
+var output=''
 
-for ( var i = 0; i < wordToGuess.length ; i++) {
-    letters[i] = wordToGuess.slice( i, i+1 );
-    guessed[i] = '_'
-    console.log(i + ": " + letters[i])
+function newWord( enteredWord ) {
+    wordToGuess = enteredWord.toLowerCase();
+    guessesLeft = 6;
+    for ( var i = 0; i < wordToGuess.length ; i++) {
+        letters[i] = wordToGuess.slice( i, i+1 );
+        guessed[i] = '_'
+        output = output + guessed[i] + ' ';
+        // console.log(i + ": " + letters[i])
+    }
+    return output + ' ' + guessesLeft + ' guesses left'
 }
 
-
-function guess( userGuess ) {
+function guess( uG ) {
+    userGuess = uG.toLowerCase();
     if (userGuess.length > 1){
         if ( userGuess === wordToGuess ) {
             return 'Correct! You win!';
@@ -23,7 +30,7 @@ function guess( userGuess ) {
             }
         }
     } else {
-        var output = '';
+        output = '';
         for (var i = 0; i < letters.length; i++) {
             if ( userGuess === letters[i] ) {
                 guessed[i] = letters[i];
