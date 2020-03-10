@@ -11,5 +11,28 @@
     </head>
     <body>
         <h1 id="my-heading">Hangman Game Exercise</h1>
+        <article>
+            <section>
+                <form id="guess-form" action="#" method="GET">
+                    <h2>Give it your best shot!</h2>
+                    <label for="guess-input">
+                        Enter guess
+                        <input id="guess-input" name="guess-input" type="text">
+                    </label>
+                    <input id="submit" type="submit" value="Try it !">
+                </form>
+            </section>
+            <section id="game-state">
+                <p id="guess-state">
+                    <span>_</span><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span>
+                </p>
+                <p id="uncontained-letters">
+                    Not in word:  <span>befgt</span>                    
+                </p>
+                <p id="tries-left">
+                    You have <strong>6</strong> tries left
+                </p>
+            </section>
+        </article>
     </body>
 </html>

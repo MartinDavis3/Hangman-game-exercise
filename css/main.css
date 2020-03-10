@@ -1,0 +1,28 @@
+article {
+    display: grid;
+    grid-template-columns: 30% 30%;
+    grid-template-rows: auto;
+}
+
+form label, form input {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+#guess-state {
+    font-size: 48px;
+    letter-spacing: 24px;
+}
+
+#uncontained-letters {
+    font-size: 24px;
+}
+
+#uncontained-letters span {
+    letter-spacing: 12px;
+}
+
+#tries-left {
+    font-size: 18px;
+}
