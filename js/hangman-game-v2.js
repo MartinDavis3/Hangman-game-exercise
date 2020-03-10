@@ -44,5 +44,19 @@ guessForm.addEventListener( 'submit', function ( event ) {
     // Extract the value
     var guessValue = guessField.value;
     guessValue = guessValue.toLowerCase();
+
+    var result= false
+
+    if (guessValue.length > 1) {
+        result = gameState.wordCorrect( guessValue )
+    } else {
+        result = gameState.letterCorrect( guessValue )
+    }
+
 } ) ;
+
+function startNewGame() {
+    gameState.newWord( 'developer' )
+}
+
 
