@@ -59,6 +59,7 @@ guessForm.addEventListener( 'submit', function ( event ) {
     var guessField = document.getElementById( 'guess-input' );
     var guessValue = guessField.value;
     guessValue = guessValue.toLowerCase();
+    document.getElementById( 'guess-input' ).value = '';
 
     var result = false;
 
@@ -80,8 +81,14 @@ guessForm.addEventListener( 'submit', function ( event ) {
     }
 } ) ;
 
+function ClearCommunication() {
+    var communicationPara = document.getElementById( 'communication');
+    communicationPara.textContent = "";
+}
+
 function startNewGame() {
-    gameState.newWord( 'shopping' );
+    var randomIndex = Math.floor(Math.random() * 5);
+    gameState.newWord( wordsList[ randomIndex ] );
     outputState();
     var communicationPara = document.getElementById( 'communication');
     communicationPara.textContent = "";
@@ -96,4 +103,4 @@ function outputState() {
     triesLeftSpan.textContent = gameState.triesLeft;
 }
 
-
+const wordsList = ["shopping", "programmer", "balloon", "juggernaut", "xylophone"]
