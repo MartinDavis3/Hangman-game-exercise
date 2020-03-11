@@ -9,6 +9,8 @@ var gameState = {
     newWord: function ( word ) {
         this.secretWord = word;
         this.guessedWord = '';
+        this.secretLetters = [];
+        this.guessedState = [];
         for ( var i = 0; i < word.length; i++) {
             this.secretLetters[i] = word.slice( i, i + 1 );
             this.guessedState[i] = ['_'];
@@ -50,6 +52,7 @@ var gameState = {
 }
 
 var guessForm = document.getElementById( 'guess-form' );
+var guessedList = [];
 
 // Add form submission listener
 guessForm.addEventListener( 'submit', function ( event ) {
@@ -61,25 +64,42 @@ guessForm.addEventListener( 'submit', function ( event ) {
     guessValue = guessValue.toLowerCase();
     document.getElementById( 'guess-input' ).value = '';
 
-    var result = false;
-
-    if ( guessValue.length > 1 ) {
-        result = gameState.wordCorrect( guessValue );
-    } else {
-        result = gameState.letterCorrect( guessValue );
-    }
-    outputState();
     var communicationPara = document.getElementById( 'communication');
-    if ( gameState.leftToGuess === 0 ) {
-        communicationPara.textContent = "Congratulations! You win!";
-    } else if ( gameState.triesLeft === 0 ) {
-        communicationPara.textContent = "Bad luck. Out of tries. You lose!";
-        var GuessPara = document.getElementById( 'guess-state' );
-        GuessPara.textContent = gameState.secretWord;
-        } else if ( result ) {
-        communicationPara.textContent = "Good guess!";
-    } else {
-        communicationPara.textContent = "Nope! hard luck.";
+
+    validTry = true;
+    if ( gameState.triesLeft === 0 ) {
+        validTry = false;
+        communicationPara.textContent = "You have to start a new game.";
+    }
+
+    for (var i = 0; i < guessedList.length; i++) {
+        if ( guessValue === guessedList[i] ) {
+            communicationPara.textContent = "You already tried that!";
+            validTry = false;
+            break;
+        }
+    }
+    guessedList.push( guessValue );
+
+    if ( validTry ) {
+        var result = false;
+        if ( guessValue.length > 1 ) {
+            result = gameState.wordCorrect( guessValue );
+        } else {
+            result = gameState.letterCorrect( guessValue );
+        }
+        outputState();
+        if ( gameState.leftToGuess === 0 ) {
+            communicationPara.textContent = "Congratulations! You win!";
+        } else if ( gameState.triesLeft === 0 ) {
+            communicationPara.textContent = "Bad luck. Out of tries. You lose!";
+            var GuessPara = document.getElementById( 'guess-state' );
+            GuessPara.textContent = gameState.secretWord;
+            } else if ( result ) {
+            communicationPara.textContent = "Good guess!";
+        } else {
+            communicationPara.textContent = "Nope! hard luck.";
+        }
     }
 } ) ;
 
@@ -89,6 +109,7 @@ function ClearCommunication() {
 }
 
 function startNewGame() {
+    guessedList=[];
     var randomIndex = Math.floor(Math.random() * wordsList.length);
     gameState.newWord( wordsList[ randomIndex ] );
     outputState();
