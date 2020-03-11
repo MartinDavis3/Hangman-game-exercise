@@ -1,13 +1,15 @@
 var gameState = {
-    secretWord = '',
+    secretWord: '',
     secretLetters: [],
     guessedState: [],
     guessedWord: '',
-    wrongGuesses:'',
+    wrongGuesses: '',
     leftToGuess: 0,
     triesLeft: 6,
     newWord: function ( word ) {
-        for ( var i; i < word.length; i++) {
+        this.secretWord = word;
+        this.guessedWord = '';
+        for ( var i = 0; i < word.length; i++) {
             this.secretLetters[i] = word.slice( i, i + 1 );
             this.guessedState[i] = ['_'];
             this.guessedWord = this.guessedWord + '_';
@@ -18,8 +20,8 @@ var gameState = {
     },
     letterCorrect: function ( testChar ) {
         var letterFound = false;
-        guessedWord = '';
-        for (var i; i < this.secretLetters.length; i++) {
+        this.guessedWord = '';
+        for (var i = 0; i < this.secretLetters.length; i++) {
             if ( testChar === this.secretLetters[i] ) {
                 this.guessedState[i] = this.secretLetters[i];
                 this.leftToGuess--;
@@ -38,7 +40,7 @@ var gameState = {
         if ( testWord === this.secretWord ) {
             this.guessedState = this.secretLetters;
             this.guessedWord = this.secretWord;
-            this.leftToGuessed = 0;
+            this.leftToGuess = 0;
             wordFound = true;    
         } else {
             this.triesLeft--;
@@ -59,15 +61,13 @@ guessForm.addEventListener( 'submit', function ( event ) {
     guessValue = guessValue.toLowerCase();
 
     var result = false;
-    var wordTested = false;
 
-    if (guessValue.length > 1) {
-        wordTested = true;
+    if ( guessValue.length > 1 ) {
         result = gameState.wordCorrect( guessValue );
     } else {
         result = gameState.letterCorrect( guessValue );
     }
-    outputState()
+    outputState();
     var communicationPara = document.getElementById( 'communication');
     if ( gameState.leftToGuess === 0 ) {
         communicationPara.textContent = "Congratulations! You win!";
@@ -82,6 +82,9 @@ guessForm.addEventListener( 'submit', function ( event ) {
 
 function startNewGame() {
     gameState.newWord( 'shopping' );
+    outputState();
+    var communicationPara = document.getElementById( 'communication');
+    communicationPara.textContent = "";
 }
 
 function outputState() {
