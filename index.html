@@ -25,13 +25,16 @@
             <section id="game-state">
                 <button id="new-game" onclick="startNewGame()">New Game</button>
                 <p id="guess-state">
-                    <span>_</span><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span>
+                    _________
                 </p>
-                <p id="uncontained-letters">
-                    Not in word:  <span>befgt</span>                    
+                <p >
+                    Not in word:   <span id="uncontained-letters">befgt</span>                    
                 </p>
-                <p id="tries-left">
-                    You have <strong>6</strong> tries left
+                <p >
+                    You have <strong id="tries-left">6</strong> tries left
+                </p>
+                <p id="communication">
+                    Nope! Bad luck.
                 </p>
             </section>
         </article>
