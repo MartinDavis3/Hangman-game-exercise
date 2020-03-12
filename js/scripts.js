@@ -1,4 +1,4 @@
-// The gameState object holds the propeties for the current state of the game
+// The gameState object holds the properties for the current state of the game
 // and the methods used for game play. It does not handle UI communication.
 // Some properties (e.g. the word to be guessed) are held in differt forms which are kept synchronised,
 // one for ease of comparison, the other for ease of output.
@@ -15,7 +15,7 @@ var gameState = {
         this.guessedWord = '';
         this.secretLetters = [];
         this.guessedState = [];
-        for ( var i = 0; i < word.length; i++) {
+        for ( let i = 0; i < word.length; i++) {
             this.secretLetters[i] = word.slice( i, i + 1 );
             this.guessedState[i] = ['_'];
             this.guessedWord = this.guessedWord + '_';
@@ -27,7 +27,7 @@ var gameState = {
     letterCorrect: function ( testChar ) {
         var letterFound = false;
         this.guessedWord = '';
-        for (var i = 0; i < this.secretLetters.length; i++) {
+        for (let i = 0; i < this.secretLetters.length; i++) {
             if ( testChar === this.secretLetters[i] ) {
                 this.guessedState[i] = this.secretLetters[i];
                 this.leftToGuess--;
@@ -79,22 +79,23 @@ guessForm.addEventListener( 'submit', function ( event ) {
         communicationPara.textContent = "You have to start a new game.";
     }
 
-    for (var i = 0; i < guessedList.length; i++) {
+    for (let i = 0; i < guessedList.length; i++) {
         if ( guessValue === guessedList[i] ) {
             communicationPara.textContent = "You already tried that!";
             validTry = false;
             break;
         }
     }
+    // Save this guess for checking with later guesses
     guessedList.push( guessValue );
 
     // If this is a valid guess
     if ( validTry ) {
-        var result = false;
+        var guessCorrect = false;
         if ( guessValue.length > 1 ) {
-            result = gameState.wordCorrect( guessValue );
+            guessCorrect = gameState.wordCorrect( guessValue );
         } else {
-            result = gameState.letterCorrect( guessValue );
+            guessCorrect = gameState.letterCorrect( guessValue );
         }
         outputState();
         if ( gameState.leftToGuess === 0 ) {
@@ -103,7 +104,7 @@ guessForm.addEventListener( 'submit', function ( event ) {
             communicationPara.textContent = "Bad luck. Out of tries. You lose!";
             var GuessPara = document.getElementById( 'guess-state' );
             GuessPara.textContent = gameState.secretWord;
-            } else if ( result ) {
+        } else if ( guessCorrect ) {
             communicationPara.textContent = "Good guess!";
         } else {
             communicationPara.textContent = "Nope! hard luck.";
